@@ -52,3 +52,46 @@ def easy_execute():
 if __name__ == '__main__':
     app.run(debug=True)
 ```
+
+#### Availble Config Params
+
+| Param                     | Default Value |
+| ------------------------- | ------------- |
+| MYSQL_USER                |               |
+| MYSQL_PASSWORD            |               |
+| MYSQL_DATABASE            |               |
+| MYSQL_HOST                | 127.0.0.1     |
+| MYSQL_PORT                | 3306          |
+| MYSQL_UNIX_SOCKET         |               |
+| MYSQL_AUTH_PLUGIN         |               |
+| MYSQL_USE_UNICODE         | TRUE          |
+| MYSQL_CHARSET             | utf8          |
+| MYSQL_COLLATION           |               |
+| MYSQL_AUTOCOMMIT          | FALSE         |
+| MYSQL_TIME_ZONE           |               |
+| MYSQL_SQL_MODE            |               |
+| MYSQL_GET_WARNINGS        | FALSE         |
+| MYSQL_RAISE_ON_WARNINGS   | FALSE         |
+| MYSQL_CONNECTION_TIMEOUT  |               |
+| MYSQL_CLIENT_FLAGS        |               |
+| MYSQL_BUFFERED            | FALSE         |
+| MYSQL_RAW                 | FALSE         |
+| MYSQL_CONSUME_RESULTS     | FALSE         |
+| MYSQL_SSL_CA              |               |
+| MYSQL_SSL_CERT            |               |
+| MYSQL_SSL_DISABLED        | FALSE         |
+| MYSQL_SSL_KEY             |               |
+| MYSQL_SSL_VERIFY_CERT     | FALSE         |
+| MYSQL_SSL_VERIFY_IDENTITY | FALSE         |
+| MYSQL_FORCE_IPV6          | FALSE         |
+| MYSQL_DSN                 |               |
+| MYSQL_POOL_NAME           |               |
+| MYSQL_POOL_SIZE           | 5             |
+| MYSQL_POOL_RESET_SESSION  | TRUE          |
+| MYSQL_COMPRESS            | FALSE         |
+| MYSQL_CONVERTER_CLASS     |               |
+| MYSQL_FAILOVER            |               |
+| MYSQL_OPTION_FILES        |               |
+| MYSQL_OPTION_GROUPS       |               |
+| MYSQL_ALLOW_LOCAL_INFILE  | TRUE          |
+| MYSQL_USE_PURE            |               |
