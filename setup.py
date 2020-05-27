@@ -2,7 +2,7 @@
 Flask-MySql-Connector
 -------------
 
-Easy to use MySQL client for Flask app.
+Easy to use MySQL client for Flask apps.
 """
 from setuptools import setup
 
@@ -14,7 +14,7 @@ setup(
     license='BSD',
     author='Branden Colen',
     author_email='brandencolen@gmail.com',
-    description='Easy to use MySQL client for Flask app.',
+    description='Easy to use MySQL client for Flask apps.',
     long_description=__doc__,
     packages=['flask_mysql_connector'],
     namespace_packages=['flask_mysql_connector'],
