@@ -1,6 +1,4 @@
 from flask import Flask
-import sys
-sys.path.append('../flask_mysql_connector')
 from flask_mysql_connector import MySQL
 
 app = Flask(__name__)
