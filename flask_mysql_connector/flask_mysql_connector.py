@@ -1,6 +1,6 @@
+import mysql.connector
 import pandas as pd
 from flask import _app_ctx_stack, current_app
-import mysql.connector
 
 
 class MySQL(object):
