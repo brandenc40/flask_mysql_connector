@@ -176,4 +176,5 @@ class MySQL(object):
             out = pd.DataFrame(cursor.fetchall(), columns=cursor.column_names)
         else:
             out = cursor.fetchall()
+        cursor.close()
         return out

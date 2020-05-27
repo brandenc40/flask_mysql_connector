@@ -1,6 +1,7 @@
 # dev
 .vscode
 env
+devenv
 __pycache__
 
 # deploy
