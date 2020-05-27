@@ -2,6 +2,14 @@
 
 ### Easy to use MySQL client for Flask apps.
 
+#### Install
+
+```
+pip install flask-mysql-connector
+```
+
+#### Example Usage
+
 ```python
 from flask import Flask
 from flask_mysql_connector import MySQL
@@ -33,7 +41,7 @@ def connection():
     return str(output)
 
 
-# using the execute_sql() method to easily 
+# using the execute_sql() method to easily
 # select sql and optionally output to Pandas
 @app.route('/easy_execute')
 def easy_execute():

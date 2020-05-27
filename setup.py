@@ -1,27 +1,29 @@
-"""
-Flask-MySql-Connector
--------------
-
-Easy to use MySQL client for Flask apps.
-"""
 from setuptools import setup
+from os import path
 
+
+with open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding='utf-8') as f:
+    long_description = f.read()
 
 setup(
-    name='Flask-MySql-Connector',
+    name='flask_mysql_connector',
     version='1.0',
     url='https://github.com/brandenc40/flask_mysql_connector',
-    license='BSD',
+    license='MIT',
     author='Branden Colen',
     author_email='brandencolen@gmail.com',
     description='Easy to use MySQL client for Flask apps.',
-    long_description=__doc__,
+    long_description=long_description,
+    long_description_content_type='text/markdown',
     packages=['flask_mysql_connector'],
-    namespace_packages=['flask_mysql_connector'],
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    packages=setuptools.find_packages(),
+    install_requires=[
+        'mysql-connector-python',
+        'flask',
+        'pandas'
+    ],
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',

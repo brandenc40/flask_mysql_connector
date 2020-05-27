@@ -2,3 +2,8 @@
 .vscode
 env
 __pycache__
+
+# deploy
+dist/
+build/
+*.egg-info
