@@ -14,6 +14,7 @@ mysql = MySQL(app)
 EXAMPLE_SQL = 'select * from sys.user_summary'
 
 
+# using the new_cursor() method
 @app.route('/new_cursor')
 def new_cursor():
     cur = mysql.new_cursor(dictionary=True)
@@ -22,6 +23,7 @@ def new_cursor():
     return str(output)
 
 
+# using the connection property
 @app.route('/connection')
 def connection():
     conn = mysql.connection
@@ -31,6 +33,8 @@ def connection():
     return str(output)
 
 
+# using the execute_sql() method to easily 
+# select sql and optionally output to Pandas
 @app.route('/easy_execute')
 def easy_execute():
     df = mysql.execute_sql(EXAMPLE_SQL, to_pandas=True)
