@@ -10,7 +10,7 @@ from setuptools import setup
 setup(
     name='Flask-MySql-Connector',
     version='1.0',
-    url='http://example.com/flask-sqlite3/',
+    url='https://github.com/brandenc40/flask_mysql_connector',
     license='BSD',
     author='Branden Colen',
     author_email='brandencolen@gmail.com',
@@ -21,13 +21,10 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    install_requires=[
-        'Flask'
-    ],
+    packages=setuptools.find_packages(),
     classifiers=[
         'Environment :: Web Environment',
         'Intended Audience :: Developers',
-        'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',

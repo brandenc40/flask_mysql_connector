@@ -1,14 +1,14 @@
 import pandas as pd
 from flask import _app_ctx_stack, current_app
-from mysql.connector import MySQLConnection
+import mysql.connector
 
 
 class MySQL(object):
     def __init__(self, app=None, connection_args=None):
         """
         :param flask.Flask app:
-        :param dict[str, str] connection_args: Args to be used in MySQLConnection. Overrides any args found 
-            in the Flask app config. 
+        :param dict[str, str] connection_args: Args to be used in MySQLConnection. Overrides any args found
+            in the Flask app config.
         """
         self.connection_args = connection_args
         self.app = app
@@ -29,9 +29,7 @@ class MySQL(object):
         app.config.setdefault('MYSQL_AUTH_PLUGIN', None)
         app.config.setdefault('MYSQL_USE_UNICODE', True)
         app.config.setdefault('MYSQL_CHARSET', 'utf8')
-
-        # todo version
-        app.config.setdefault('MYSQL_COLLATION', 'utf8mb4_general_ai_ci')
+        app.config.setdefault('MYSQL_COLLATION', None)
         app.config.setdefault('MYSQL_AUTOCOMMIT', False)
         app.config.setdefault('MYSQL_TIME_ZONE', None)
         app.config.setdefault('MYSQL_SQL_MODE', None)
@@ -57,59 +55,95 @@ class MySQL(object):
         app.config.setdefault('MYSQL_CONVERTER_CLASS', None)
         app.config.setdefault('MYSQL_FAILOVER', None)
         app.config.setdefault('MYSQL_OPTION_FILES', None)
-        option_groups = ['client', 'connector_python']
-        app.config.setdefault('MYSQL_OPTION_GROUPS', option_groups)
+        app.config.setdefault('MYSQL_OPTION_GROUPS', None)
         app.config.setdefault('MYSQL_ALLOW_LOCAL_INFILE', True)
-        app.config.setdefault('MYSQL_USE_PURE', False)  # todo version
+        app.config.setdefault('MYSQL_USE_PURE', None)
 
         app.teardown_appcontext(self.teardown)
 
-    def connect(self):
-        connect_args = {
-            'user': current_app.config['MYSQL_USER'],
-            'password': current_app.config['MYSQL_PASSWORD'],
-            'database': current_app.config['MYSQL_DATABASE'],
-            'host': current_app.config['MYSQL_HOST'],
-            'port': current_app.config['MYSQL_PORT'],
-            'unix_socket': current_app.config['MYSQL_UNIX_SOCKET'],
-            'auth_plugin': current_app.config['MYSQL_AUTH_PLUGIN'],
-            'use_unicode': current_app.config['MYSQL_USE_UNICODE'],
-            'charset': current_app.config['MYSQL_CHARSET'],
-            'collation': current_app.config['MYSQL_COLLATION'],
-            'autocommit': current_app.config['MYSQL_AUTOCOMMIT'],
-            'time_zone': current_app.config['MYSQL_TIME_ZONE'],
-            'sql_mode': current_app.config['MYSQL_SQL_MODE'],
-            'get_warnings': current_app.config['MYSQL_GET_WARNINGS'],
-            'raise_on_warnings': current_app.config['MYSQL_RAISE_ON_WARNINGS'],
-            'connection_timeout': current_app.config['MYSQL_CONNECTION_TIMEOUT'],
-            'client_flags': current_app.config['MYSQL_CLIENT_FLAGS'],
-            'buffered': current_app.config['MYSQL_BUFFERED'],
-            'raw': current_app.config['MYSQL_RAW'],
-            'consume_results': current_app.config['MYSQL_CONSUME_RESULTS'],
-            'ssl_ca': current_app.config['MYSQL_SSL_CA'],
-            'ssl_cert': current_app.config['MYSQL_SSL_CERT'],
-            'ssl_disabled': current_app.config['MYSQL_SSL_DISABLED'],
-            'ssl_key': current_app.config['MYSQL_SSL_KEY'],
-            'ssl_verify_cert': current_app.config['MYSQL_SSL_VERIFY_CERT'],
-            'ssl_verify_identity': current_app.config['MYSQL_SSL_VERIFY_IDENTITY'],
-            'force_ipv6': current_app.config['MYSQL_FORCE_IPV6'],
-            'dsn': current_app.config['MYSQL_DSN'],
-            'pool_name': current_app.config['MYSQL_POOL_NAME'],
-            'pool_size': current_app.config['MYSQL_POOL_SIZE'],
-            'pool_reset_session': current_app.config['MYSQL_POOL_RESET_SESSION'],
-            'compress': current_app.config['MYSQL_COMPRESS'],
-            'converter_class': current_app.config['MYSQL_CONVERTER_CLASS'],
-            'failover': current_app.config['MYSQL_FAILOVER'],
-            'option_files': current_app.config['MYSQL_OPTION_FILES'],
-            'option_groups': current_app.config['MYSQL_OPTION_GROUPS'],
-            'allow_local_infile': current_app.config['MYSQL_ALLOW_LOCAL_INFILE'],
-            'use_pure': current_app.config['MYSQL_USE_PURE']
-        }
+    def _connect(self):
+        connect_args = {}
+
+        if current_app.config['MYSQL_USER']:
+            connect_args['user'] = current_app.config['MYSQL_USER']
+        if current_app.config['MYSQL_PASSWORD']:
+            connect_args['password'] = current_app.config['MYSQL_PASSWORD']
+        if current_app.config['MYSQL_DATABASE']:
+            connect_args['database'] = current_app.config['MYSQL_DATABASE']
+        if current_app.config['MYSQL_HOST']:
+            connect_args['host'] = current_app.config['MYSQL_HOST']
+        if current_app.config['MYSQL_PORT']:
+            connect_args['port'] = current_app.config['MYSQL_PORT']
+        if current_app.config['MYSQL_UNIX_SOCKET']:
+            connect_args['unix_socket'] = current_app.config['MYSQL_UNIX_SOCKET']
+        if current_app.config['MYSQL_AUTH_PLUGIN']:
+            connect_args['auth_plugin'] = current_app.config['MYSQL_AUTH_PLUGIN']
+        if current_app.config['MYSQL_USE_UNICODE']:
+            connect_args['use_unicode'] = current_app.config['MYSQL_USE_UNICODE']
+        if current_app.config['MYSQL_CHARSET']:
+            connect_args['charset'] = current_app.config['MYSQL_CHARSET']
+        if current_app.config['MYSQL_COLLATION']:
+            connect_args['collation'] = current_app.config['MYSQL_COLLATION']
+        if current_app.config['MYSQL_AUTOCOMMIT']:
+            connect_args['autocommit'] = current_app.config['MYSQL_AUTOCOMMIT']
+        if current_app.config['MYSQL_TIME_ZONE']:
+            connect_args['time_zone'] = current_app.config['MYSQL_TIME_ZONE']
+        if current_app.config['MYSQL_SQL_MODE']:
+            connect_args['sql_mode'] = current_app.config['MYSQL_SQL_MODE']
+        if current_app.config['MYSQL_GET_WARNINGS']:
+            connect_args['get_warnings'] = current_app.config['MYSQL_GET_WARNINGS']
+        if current_app.config['MYSQL_RAISE_ON_WARNINGS']:
+            connect_args['raise_on_warnings'] = current_app.config['MYSQL_RAISE_ON_WARNINGS']
+        if current_app.config['MYSQL_CONNECTION_TIMEOUT']:
+            connect_args['connection_timeout'] = current_app.config['MYSQL_CONNECTION_TIMEOUT']
+        if current_app.config['MYSQL_CLIENT_FLAGS']:
+            connect_args['client_flags'] = current_app.config['MYSQL_CLIENT_FLAGS']
+        if current_app.config['MYSQL_BUFFERED']:
+            connect_args['buffered'] = current_app.config['MYSQL_BUFFERED']
+        if current_app.config['MYSQL_RAW']:
+            connect_args['raw'] = current_app.config['MYSQL_RAW']
+        if current_app.config['MYSQL_CONSUME_RESULTS']:
+            connect_args['consume_results'] = current_app.config['MYSQL_CONSUME_RESULTS']
+        if current_app.config['MYSQL_SSL_CA']:
+            connect_args['ssl_ca'] = current_app.config['MYSQL_SSL_CA']
+        if current_app.config['MYSQL_SSL_CERT']:
+            connect_args['ssl_cert'] = current_app.config['MYSQL_SSL_CERT']
+        if current_app.config['MYSQL_SSL_DISABLED']:
+            connect_args['ssl_disabled'] = current_app.config['MYSQL_SSL_DISABLED']
+        if current_app.config['MYSQL_SSL_KEY']:
+            connect_args['ssl_key'] = current_app.config['MYSQL_SSL_KEY']
+        if current_app.config['MYSQL_SSL_VERIFY_CERT']:
+            connect_args['ssl_verify_cert'] = current_app.config['MYSQL_SSL_VERIFY_CERT']
+        if current_app.config['MYSQL_SSL_VERIFY_IDENTITY']:
+            connect_args['ssl_verify_identity'] = current_app.config['MYSQL_SSL_VERIFY_IDENTITY']
+        if current_app.config['MYSQL_FORCE_IPV6']:
+            connect_args['force_ipv6'] = current_app.config['MYSQL_FORCE_IPV6']
+        if current_app.config['MYSQL_DSN']:
+            connect_args['dsn'] = current_app.config['MYSQL_DSN']
+        if current_app.config['MYSQL_POOL_NAME']:
+            connect_args['pool_name'] = current_app.config['MYSQL_POOL_NAME']
+        if current_app.config['MYSQL_POOL_SIZE']:
+            connect_args['pool_size'] = current_app.config['MYSQL_POOL_SIZE']
+        if current_app.config['MYSQL_POOL_RESET_SESSION']:
+            connect_args['pool_reset_session'] = current_app.config['MYSQL_POOL_RESET_SESSION']
+        if current_app.config['MYSQL_COMPRESS']:
+            connect_args['compress'] = current_app.config['MYSQL_COMPRESS']
+        if current_app.config['MYSQL_CONVERTER_CLASS']:
+            connect_args['converter_class'] = current_app.config['MYSQL_CONVERTER_CLASS']
+        if current_app.config['MYSQL_FAILOVER']:
+            connect_args['failover'] = current_app.config['MYSQL_FAILOVER']
+        if current_app.config['MYSQL_OPTION_FILES']:
+            connect_args['option_files'] = current_app.config['MYSQL_OPTION_FILES']
+        if current_app.config['MYSQL_ALLOW_LOCAL_INFILE']:
+            connect_args['allow_local_infile'] = current_app.config['MYSQL_ALLOW_LOCAL_INFILE']
+        if current_app.config['MYSQL_USE_PURE']:
+            connect_args['use_pure'] = current_app.config['MYSQL_USE_PURE']
 
         # overrides any args from config
-        connect_args.update(self.connection_args)
+        if self.connection_args:
+            connect_args.update(self.connection_args)
 
-        return MySQLConnection(**connect_args)
+        return mysql.connector.connect(**connect_args)
 
     def teardown(self, _):
         ctx = _app_ctx_stack.top
@@ -121,7 +155,7 @@ class MySQL(object):
         ctx = _app_ctx_stack.top
         if ctx is not None:
             if not hasattr(ctx, 'mysql_db'):
-                ctx.mysql_db = self.connect()
+                ctx.mysql_db = self._connect()
             return ctx.mysql_db
 
     def new_cursor(self, **kwargs):

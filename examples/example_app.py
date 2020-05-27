@@ -1,8 +1,3 @@
-# Flask-MySQL-Connector
-
-### Easy to use MySQL client for Flask apps.
-
-```python
 from flask import Flask
 from flask_mysql_connector import MySQL
 
@@ -39,4 +34,3 @@ def easy_execute():
 
 if __name__ == '__main__':
     app.run(debug=True)
-```
