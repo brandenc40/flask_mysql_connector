@@ -15,14 +15,17 @@ from flask import Flask
 from flask_mysql_connector import MySQL, Params
 
 app = Flask(__name__)
+
 # params used for all connections
 app.config[Params.MYSQL_USER] = 'root'
 app.config[Params.MYSQL_DATABASE] = 'sys'
 
 mysql = MySQL(app)
+
 mysql2 = MySQL(
     app, 
-    ctx_key="2",
+    # creates key `mysql_db_2` instead of default of `mysql_db`
+    ctx_key="2", 
     # params used for only this connection to override default
     connection_args={Params.MYSQL_DATABASE: "another_db"}
 )
