@@ -7,7 +7,7 @@ with open(path.join(path.abspath(path.dirname(__file__)), 'README.md'), encoding
 
 setup(
     name='flask_mysql_connector',
-    version='1.0.3',
+    version='1.1.0',
     url='https://github.com/brandenc40/flask_mysql_connector',
     license='MIT',
     author='Branden Colen',
@@ -19,6 +19,7 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
+    python_requires=">= 3.6",
     install_requires=[
         'mysql-connector-python',
         'flask',
@@ -30,6 +31,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
-        'Topic :: Software Development :: Libraries :: Python Modules'
+        'Topic :: Software Development :: Libraries :: Python Modules',
+        'Programming Language :: Python :: 3',
     ]
 )

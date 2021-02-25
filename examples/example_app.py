@@ -1,12 +1,16 @@
-from flask import Flask
+import json
 import sys
+
+from flask import Flask
+
 sys.path.append('../')
-from flask_mysql_connector import MySQL
+from flask_mysql_connector.flask_mysql_connector import MySQL
 
 app = Flask(__name__)
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_DATABASE'] = 'sys'
-mysql = MySQL(app)
+mysql = MySQL(app, ctx_key="num1")
+mysql2 = MySQL(app, ctx_key="num2")
 
 EXAMPLE_SQL = 'select * from sys.user_summary'
 
@@ -26,7 +30,7 @@ def new_cursor():
 
 @app.route('/connection')
 def connection():
-    conn = mysql.connection
+    conn = mysql2.connection
     cur = conn.cursor()
     cur.execute(EXAMPLE_SQL)
     output = cur.fetchall()

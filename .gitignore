@@ -3,6 +3,7 @@
 env
 devenv
 __pycache__
+.idea
 
 # deploy
 dist/
