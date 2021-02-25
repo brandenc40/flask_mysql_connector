@@ -19,7 +19,6 @@ setup(
     zip_safe=False,
     include_package_data=True,
     platforms='any',
-    python_requires=">= 3.6",
     install_requires=[
         'mysql-connector-python',
         'flask',
@@ -32,6 +31,7 @@ setup(
         'Programming Language :: Python',
         'Topic :: Internet :: WWW/HTTP :: Dynamic Content',
         'Topic :: Software Development :: Libraries :: Python Modules',
+        'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 3',
     ]
 )
