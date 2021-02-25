@@ -17,8 +17,16 @@ from flask_mysql_connector import MySQL, Params
 app = Flask(__name__)
 app.config[Params.MYSQL_USER] = 'root'
 app.config[Params.MYSQL_DATABASE] = 'sys'
-mysql = MySQL(app, ctx_key="num1")
-mysql2 = MySQL(app, ctx_key="num2")
+mysql = MySQL(
+    app, 
+    ctx_key="1", 
+    connection_args={Params.MYSQL_DATABASE: "sys"}
+)
+mysql2 = MySQL(
+    app, 
+    ctx_key="2", 
+    connection_args={Params.MYSQL_DATABASE: "another_db"}
+)
 
 EXAMPLE_SQL = 'select * from sys.user_summary'
 
