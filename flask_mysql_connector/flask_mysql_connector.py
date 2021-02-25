@@ -54,6 +54,11 @@ class MySQL:
     def __init__(self, app=None, ctx_key=None, connection_args=None):
         """
         :param flask.Flask app:
+        :param str ctx_key: The unique key used for storing this mysql connection in the app context stack. This is
+            useful if you are using two separate MySQL connections so they don't fight over the same ctx attribute.
+                e.g.
+                    mysql = MySQL(app, ctx_key="num1")
+                    mysql2 = MySQL(app, ctx_key="num2")
         :param dict[str, str] connection_args: Args to be used in mysql.connector.connect(). Overrides any args found
             in the Flask app config.
         """
