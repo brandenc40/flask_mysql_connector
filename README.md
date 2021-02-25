@@ -16,7 +16,6 @@ from flask_mysql_connector import MySQL, Params
 
 app = Flask(__name__)
 app.config[Params.MYSQL_USER] = 'root'
-app.config[Params.MYSQL_DATABASE] = 'sys'
 mysql = MySQL(
     app, 
     ctx_key="1", 
