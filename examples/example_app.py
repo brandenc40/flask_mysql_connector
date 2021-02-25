@@ -1,14 +1,13 @@
-import json
 import sys
 
 from flask import Flask
 
 sys.path.append('../')
-from flask_mysql_connector.flask_mysql_connector import MySQL
+from flask_mysql_connector import MySQL, Params
 
 app = Flask(__name__)
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_DATABASE'] = 'sys'
+app.config[Params.MYSQL_USER] = 'root'
+app.config[Params.MYSQL_DATABASE] = 'sys'
 mysql = MySQL(app, ctx_key="num1")
 mysql2 = MySQL(app, ctx_key="num2")
 
