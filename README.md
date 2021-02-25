@@ -22,6 +22,7 @@ app.config[Params.MYSQL_DATABASE] = 'sys'
 
 mysql = MySQL(app)
 
+# if using 2 separate mysql connections, you'll need to include some extra optional args
 mysql2 = MySQL(
     app, 
     # creates key `mysql_db_2` instead of default of `mysql_db`
