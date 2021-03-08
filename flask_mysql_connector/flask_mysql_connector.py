@@ -2,6 +2,8 @@ import mysql.connector
 import pandas as pd
 from flask import current_app
 
+from .params import Params
+
 try:
     from flask import _app_ctx_stack as _ctx_stack
 except ImportError:
@@ -10,43 +12,43 @@ except ImportError:
 # https://dev.mysql.com/doc/connector-python/en/connector-python-connectargs.html
 # key = mysql connect arg key, value = flask config key
 MYSQL_ARGS = {
-    'user': 'MYSQL_USER',
-    'password': 'MYSQL_PASSWORD',
-    'database': 'MYSQL_DATABASE',
-    'host': 'MYSQL_HOST',
-    'port': 'MYSQL_PORT',
-    'unix_socket': 'MYSQL_UNIX_SOCKET',
-    'auth_plugin': 'MYSQL_AUTH_PLUGIN',
-    'use_unicode': 'MYSQL_USE_UNICODE',
-    'charset': 'MYSQL_CHARSET',
-    'collation': 'MYSQL_COLLATION',
-    'autocommit': 'MYSQL_AUTOCOMMIT',
-    'time_zone': 'MYSQL_TIME_ZONE',
-    'sql_mode': 'MYSQL_SQL_MODE',
-    'get_warnings': 'MYSQL_GET_WARNINGS',
-    'raise_on_warnings': 'MYSQL_RAISE_ON_WARNINGS',
-    'connection_timeout': 'MYSQL_CONNECTION_TIMEOUT',
-    'client_flags': 'MYSQL_CLIENT_FLAGS',
-    'buffered': 'MYSQL_BUFFERED',
-    'raw': 'MYSQL_RAW',
-    'consume_results': 'MYSQL_CONSUME_RESULTS',
-    'ssl_ca': 'MYSQL_SSL_CA',
-    'ssl_cert': 'MYSQL_SSL_CERT',
-    'ssl_disabled': 'MYSQL_SSL_DISABLED',
-    'ssl_key': 'MYSQL_SSL_KEY',
-    'ssl_verify_cert': 'MYSQL_SSL_VERIFY_CERT',
-    'ssl_verify_identity': 'MYSQL_SSL_VERIFY_IDENTITY',
-    'force_ipv6': 'MYSQL_FORCE_IPV6',
-    'dsn': 'MYSQL_DSN',
-    'pool_name': 'MYSQL_POOL_NAME',
-    'pool_size': 'MYSQL_POOL_SIZE',
-    'pool_reset_session': 'MYSQL_POOL_RESET_SESSION',
-    'compress': 'MYSQL_COMPRESS',
-    'converter_class': 'MYSQL_CONVERTER_CLASS',
-    'failover': 'MYSQL_FAILOVER',
-    'option_files': 'MYSQL_OPTION_FILES',
-    'allow_local_infile': 'MYSQL_ALLOW_LOCAL_INFILE',
-    'use_pure': 'MYSQL_USE_PURE'
+    'user': Params.MYSQL_USER,
+    'password': Params.MYSQL_PASSWORD,
+    'database': Params.MYSQL_DATABASE,
+    'host': Params.MYSQL_HOST,
+    'port': Params.MYSQL_PORT,
+    'unix_socket': Params.MYSQL_UNIX_SOCKET,
+    'auth_plugin': Params.MYSQL_AUTH_PLUGIN,
+    'use_unicode': Params.MYSQL_USE_UNICODE,
+    'charset': Params.MYSQL_CHARSET,
+    'collation': Params.MYSQL_COLLATION,
+    'autocommit': Params.MYSQL_AUTOCOMMIT,
+    'time_zone': Params.MYSQL_TIME_ZONE,
+    'sql_mode': Params.MYSQL_SQL_MODE,
+    'get_warnings': Params.MYSQL_GET_WARNINGS,
+    'raise_on_warnings': Params.MYSQL_RAISE_ON_WARNINGS,
+    'connection_timeout': Params.MYSQL_CONNECTION_TIMEOUT,
+    'client_flags': Params.MYSQL_CLIENT_FLAGS,
+    'buffered': Params.MYSQL_BUFFERED,
+    'raw': Params.MYSQL_RAW,
+    'consume_results': Params.MYSQL_CONSUME_RESULTS,
+    'ssl_ca': Params.MYSQL_SSL_CA,
+    'ssl_cert': Params.MYSQL_SSL_CERT,
+    'ssl_disabled': Params.MYSQL_SSL_DISABLED,
+    'ssl_key': Params.MYSQL_SSL_KEY,
+    'ssl_verify_cert': Params.MYSQL_SSL_VERIFY_CERT,
+    'ssl_verify_identity': Params.MYSQL_SSL_VERIFY_IDENTITY,
+    'force_ipv6': Params.MYSQL_FORCE_IPV6,
+    'dsn': Params.MYSQL_DSN,
+    'pool_name': Params.MYSQL_POOL_NAME,
+    'pool_size': Params.MYSQL_POOL_SIZE,
+    'pool_reset_session': Params.MYSQL_POOL_RESET_SESSION,
+    'compress': Params.MYSQL_COMPRESS,
+    'converter_class': Params.MYSQL_CONVERTER_CLASS,
+    'failover': Params.MYSQL_FAILOVER,
+    'option_files': Params.MYSQL_OPTION_FILES,
+    'allow_local_infile': Params.MYSQL_ALLOW_LOCAL_INFILE,
+    'use_pure': Params.MYSQL_USE_PURE
 }
 
 
