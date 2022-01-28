@@ -1,6 +1,9 @@
-import mysql.connector
+from typing import Dict
+
 import pandas as pd
-from flask import current_app
+from flask import Flask, current_app
+from mysql.connector import MySQLConnection, connect
+from mysql.connector.cursor import MySQLCursor
 
 from .params import Params
 
@@ -53,7 +56,7 @@ MYSQL_ARGS = {
 
 
 class MySQL:
-    def __init__(self, app=None, ctx_key=None, connection_args=None):
+    def __init__(self, app: Flask = None, ctx_key: str = None, connection_args: Dict[str, str] = None):
         """
         :param flask.Flask app:
         :param str ctx_key: The unique key used for storing this mysql connection in the app context stack. This is
@@ -71,10 +74,10 @@ class MySQL:
         if app is not None:
             self.init_app(app)
 
-    def init_app(self, app):
+    def init_app(self, app: Flask):
         app.teardown_request(self._teardown)
 
-    def _connect(self):
+    def _connect(self) -> MySQLConnection:
         connect_args = {}
         config = self.app.config if self.app else current_app.config
         for k, v in MYSQL_ARGS.items():
@@ -85,7 +88,7 @@ class MySQL:
         if self._arg_overrides:
             connect_args.update(self._arg_overrides)
 
-        return mysql.connector.connect(**connect_args)
+        return connect(**connect_args)
 
     def _teardown(self, _):
         ctx = _ctx_stack.top
@@ -93,19 +96,19 @@ class MySQL:
             getattr(ctx, self._key).close()
 
     @property
-    def connection(self):
+    def connection(self) -> MySQLConnection:
         ctx = _ctx_stack.top
         if ctx is not None:
             if not hasattr(ctx, 'mysql_db'):
                 setattr(ctx, self._key, self._connect())
             return getattr(ctx, self._key)
 
-    def new_cursor(self, **kwargs):
+    def new_cursor(self, **kwargs) -> MySQLCursor:
         conn = self.connection
         if conn:
             return conn.cursor(**kwargs)
 
-    def execute_sql(self, sql, to_pandas=False, dictionary=False):
+    def execute_sql(self, sql: str, to_pandas: bool = False, dictionary: bool = False):
         """
         :param str sql:
         :param boolean to_pandas:

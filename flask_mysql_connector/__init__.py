@@ -1,7 +1,7 @@
 from .flask_mysql_connector import MySQL
 from .params import Params
 
-__version__ = "1.0.3"
+__version__ = "1.1.1"
 
 __title__ = "flask-mysql-connector"
 __description__ = "Easy to use MySQL client for Flask apps."
