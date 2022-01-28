@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict, List, Union
 
 import pandas as pd
 from flask import Flask, current_app
@@ -108,13 +108,7 @@ class MySQL:
         if conn:
             return conn.cursor(**kwargs)
 
-    def execute_sql(self, sql: str, to_pandas: bool = False, dictionary: bool = False):
-        """
-        :param str sql:
-        :param boolean to_pandas:
-        :param boolean dictionary:
-        :return pd.DataFrame|list:
-        """
+    def execute_sql(self, sql: str, to_pandas: bool = False, dictionary: bool = False) -> Union[pd.DataFrame, List]:
         cursor = self.new_cursor(dictionary=dictionary)
         cursor.execute(sql)
         if to_pandas:
