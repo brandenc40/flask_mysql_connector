@@ -99,7 +99,7 @@ class MySQL:
     def connection(self) -> MySQLConnection:
         ctx = _ctx_stack.top
         if ctx is not None:
-            if not hasattr(ctx, 'mysql_db'):
+            if not hasattr(ctx, self._key):
                 setattr(ctx, self._key, self._connect())
             return getattr(ctx, self._key)
 
